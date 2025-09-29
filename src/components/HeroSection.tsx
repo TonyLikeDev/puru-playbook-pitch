@@ -1,7 +1,5 @@
 import { Button } from "./ui/enhanced-button";
 import { MetricCard } from "./MetricCard";
-import { ContactModal } from "./ContactModal";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Play, Rocket, ArrowRight } from "lucide-react";
 
 export function HeroSection() {
@@ -28,27 +26,15 @@ export function HeroSection() {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="hero" size="xl">
-                  <Play className="w-5 h-5" />
-                  Play a Demo
-                </Button>
-              </DialogTrigger>
-              <div className="hidden">
-                {/* Demo modal would go here */}
-              </div>
-            </Dialog>
+            <Button variant="hero" size="xl">
+              <Play className="w-5 h-5" />
+              Play a Demo
+            </Button>
             
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="cta" size="xl">
-                  <Rocket className="w-5 h-5" />
-                  Let's Build Your Game Together
-                </Button>
-              </DialogTrigger>
-              <ContactModal />
-            </Dialog>
+            <Button variant="cta" size="xl">
+              <Rocket className="w-5 h-5" />
+              Let's Build Your Game Together
+            </Button>
           </div>
           
           <div className="flex justify-center">

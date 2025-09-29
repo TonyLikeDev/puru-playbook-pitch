@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "./ui/enhanced-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,11 +8,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { CheckCircle, Send, Calendar } from "lucide-react";
 
 interface ContactModalProps {
-  isOpen?: boolean;
-  onClose?: () => void;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-export function ContactModal({ isOpen, onClose }: ContactModalProps = {}) {
+export function ContactModal({ isOpen, onClose }: ContactModalProps) {
   const [formData, setFormData] = useState({
     name: "",
     company: "",
@@ -38,29 +38,32 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps = {}) {
 
   if (submitted) {
     return (
-      <DialogContent className="max-w-md">
-        <div className="text-center space-y-4 py-6">
-          <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto">
-            <CheckCircle className="w-8 h-8 text-success" />
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent className="max-w-md">
+          <div className="text-center space-y-4 py-6">
+            <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto">
+              <CheckCircle className="w-8 h-8 text-success" />
+            </div>
+            <DialogHeader>
+              <DialogTitle className="text-xl">Thanks for reaching out!</DialogTitle>
+              <DialogDescription>
+                We'll be in touch within 24 hours to discuss your project and schedule a strategy call.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-2 text-sm text-muted-foreground">
+              <p>⚡ Response time: &lt;24 hours</p>
+              <p>📞 Strategy call: 20 minutes</p>
+              <p>📊 Custom proposal: 48-72 hours</p>
+            </div>
           </div>
-          <DialogHeader>
-            <DialogTitle className="text-xl">Thanks for reaching out!</DialogTitle>
-            <DialogDescription>
-              We'll be in touch within 24 hours to discuss your project and schedule a strategy call.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-2 text-sm text-muted-foreground">
-            <p>⚡ Response time: &lt;24 hours</p>
-            <p>📞 Strategy call: 20 minutes</p>
-            <p>📊 Custom proposal: 48-72 hours</p>
-          </div>
-        </div>
-      </DialogContent>
+        </DialogContent>
+      </Dialog>
     );
   }
 
   return (
-    <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
       <DialogHeader>
         <DialogTitle className="text-xl">Let's Build Your Game Together</DialogTitle>
         <DialogDescription>
@@ -172,7 +175,8 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps = {}) {
         <p className="text-xs text-muted-foreground text-center">
           We'll respond within 24 hours with a custom proposal and next steps.
         </p>
-      </form>
-    </DialogContent>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }
