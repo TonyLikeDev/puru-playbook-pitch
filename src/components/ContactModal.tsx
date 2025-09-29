@@ -7,7 +7,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CheckCircle, Send, Calendar } from "lucide-react";
 
-export function ContactModal() {
+interface ContactModalProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export function ContactModal({ isOpen, onClose }: ContactModalProps = {}) {
   const [formData, setFormData] = useState({
     name: "",
     company: "",

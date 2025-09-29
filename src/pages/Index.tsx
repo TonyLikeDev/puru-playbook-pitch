@@ -1,7 +1,13 @@
+import { useState } from "react";
 import { HeroSection } from "@/components/HeroSection";
 import { DashboardTabs } from "@/components/DashboardTabs";
+import { ContactModal } from "@/components/ContactModal";
+import { CompanyInfoModal } from "@/components/CompanyInfoModal";
 
 const Index = () => {
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isCompanyInfoOpen, setIsCompanyInfoOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-background">
       <HeroSection />
@@ -17,15 +23,30 @@ const Index = () => {
             Ready to boost your campaign engagement by 40%?
           </span>
           <div className="flex gap-2">
-            <button className="hero-button text-sm px-4 py-2">
+            <button 
+              className="hero-button text-sm px-4 py-2"
+              onClick={() => setIsContactModalOpen(true)}
+            >
               Let's Build Your Game
             </button>
-            <button className="cta-button text-sm px-4 py-2">
+            <button 
+              className="cta-button text-sm px-4 py-2"
+              onClick={() => setIsCompanyInfoOpen(true)}
+            >
               Get Free Strategy Call
             </button>
           </div>
         </div>
       </div>
+      
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
+      <CompanyInfoModal 
+        isOpen={isCompanyInfoOpen} 
+        onClose={() => setIsCompanyInfoOpen(false)} 
+      />
     </div>
   );
 };

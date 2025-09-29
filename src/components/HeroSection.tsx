@@ -51,11 +51,7 @@ export function HeroSection() {
             </Dialog>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center text-sm">
-            <Button variant="ghost" size="sm">
-              <ArrowRight className="w-4 h-4" />
-              See Case Studies
-            </Button>
+          <div className="flex justify-center">
             <Button variant="ghost" size="sm">
               <ArrowRight className="w-4 h-4" />
               Download Purus Playbook
@@ -63,26 +59,27 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Metrics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          <MetricCard
-            value="6-8 weeks"
-            label="Avg Delivery Time"
-            description="vs 12-16 weeks industry standard"
-            delay={200}
-          />
-          <MetricCard
-            value="95%"
-            label="Client Satisfaction"
-            description="with post-launch support included"
-            delay={400}
-          />
-          <MetricCard
-            value="+40%"
-            label="Engagement Boost"
-            description="average campaign performance lift"
-            delay={600}
-          />
+        {/* Trusted By Logos Slider */}
+        <div className="max-w-4xl mx-auto">
+          <p className="text-center text-muted-foreground mb-6">Trusted by leading brands</p>
+          <div className="flex justify-center items-center gap-8 md:gap-12 opacity-60 hover:opacity-80 transition-opacity">
+            <div className="flex items-center gap-2 text-lg font-semibold text-foreground">
+              <div className="w-8 h-8 bg-gradient-to-br from-primary to-success rounded"></div>
+              Brand X
+            </div>
+            <div className="flex items-center gap-2 text-lg font-semibold text-foreground">
+              <div className="w-8 h-8 bg-gradient-to-br from-warning to-primary rounded"></div>
+              TechCorp
+            </div>
+            <div className="flex items-center gap-2 text-lg font-semibold text-foreground">
+              <div className="w-8 h-8 bg-gradient-to-br from-success to-warning rounded"></div>
+              EduLearn
+            </div>
+            <div className="flex items-center gap-2 text-lg font-semibold text-foreground">
+              <div className="w-8 h-8 bg-gradient-to-br from-primary to-warning rounded"></div>
+              GameFlow
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "./ui/enhanced-button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Play, TrendingUp, Users, Clock } from "lucide-react";
+import { Play, TrendingUp, Users, Clock, DollarSign, Gamepad2 } from "lucide-react";
 
 const portfolioItems = [
   {
@@ -14,7 +14,10 @@ const portfolioItems = [
     impact: "+30% user playtime increase",
     metrics: { engagement: "40%", retention: "25%", conversion: "12%" },
     thumbnail: "/placeholder-game1.jpg",
-    category: "Engagement Campaign"
+    category: "Engagement Campaign",
+    duration: "6 weeks",
+    cost: "$25,000",
+    genre: "Puzzle Adventure"
   },
   {
     id: "brand-y", 
@@ -24,7 +27,10 @@ const portfolioItems = [
     impact: "+45% product page visits",
     metrics: { engagement: "35%", retention: "30%", conversion: "18%" },
     thumbnail: "/placeholder-game2.jpg", 
-    category: "Lead Generation"
+    category: "Lead Generation",
+    duration: "8 weeks",
+    cost: "$45,000",
+    genre: "Exploration RPG"
   },
   {
     id: "brand-z",
@@ -34,7 +40,10 @@ const portfolioItems = [
     impact: "+60% course completion",
     metrics: { engagement: "55%", retention: "45%", conversion: "22%" },
     thumbnail: "/placeholder-game3.jpg",
-    category: "User Retention"
+    category: "User Retention",
+    duration: "10 weeks",
+    cost: "$60,000",
+    genre: "Strategy Simulation"
   }
 ];
 
@@ -95,7 +104,7 @@ export function PortfolioShowcase() {
                     className="w-full"
                     onClick={() => setSelectedCase(item)}
                   >
-                    View Case Study
+                    View Game
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-2xl">
@@ -112,31 +121,31 @@ export function PortfolioShowcase() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div className="space-y-2">
                         <h4 className="font-semibold flex items-center gap-2">
-                          <TrendingUp className="w-4 h-4 text-success" />
-                          Challenge
+                          <Clock className="w-4 h-4 text-primary" />
+                          Development Time
                         </h4>
                         <p className="text-sm text-muted-foreground">
-                          Low user engagement and poor retention rates were impacting brand awareness and customer lifetime value.
+                          {item.duration} from concept to launch
                         </p>
                       </div>
                       
                       <div className="space-y-2">
                         <h4 className="font-semibold flex items-center gap-2">
-                          <Users className="w-4 h-4 text-primary" />
-                          Solution
+                          <DollarSign className="w-4 h-4 text-success" />
+                          Investment
                         </h4>
                         <p className="text-sm text-muted-foreground">
-                          Custom gamified experience with progressive rewards, social elements, and brand integration.
+                          {item.cost} total project cost
                         </p>
                       </div>
                       
                       <div className="space-y-2">
                         <h4 className="font-semibold flex items-center gap-2">
-                          <Clock className="w-4 h-4 text-warning" />
-                          Timeline
+                          <Gamepad2 className="w-4 h-4 text-warning" />
+                          Genre
                         </h4>
                         <p className="text-sm text-muted-foreground">
-                          6-week development cycle with 2 weeks of optimization and A/B testing.
+                          {item.genre}
                         </p>
                       </div>
                     </div>
