@@ -120,10 +120,10 @@ export function PortfolioShowcase() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {itemsToShow.map((item) => (
-          <Card key={item.id} className="group hover:shadow-lg transition-all duration-300 cursor-pointer border-0 bg-gradient-to-br from-card to-muted/30">
+          <Card key={item.id} className="group tilt-card transition-all duration-300 cursor-pointer border-0 bg-gradient-to-br from-card to-muted/30 neon-border">
             <CardHeader className="space-y-3">
               <div 
-                className="aspect-video bg-gradient-to-br from-primary/10 to-success/10 rounded-lg flex items-center justify-center relative overflow-hidden cursor-pointer"
+                className="aspect-video bg-gradient-to-br from-primary/10 to-success/10 rounded-lg flex items-center justify-center relative overflow-hidden cursor-pointer ring-1 ring-white/20"
                 onClick={() => {
                   // Check if it's one of our 4 games and navigate to their page
                   if (['block-game', 'fruit-game', 'bus-game', 'sort-game'].includes(item.id)) {
@@ -131,7 +131,53 @@ export function PortfolioShowcase() {
                   }
                 }}
               >
-                <Play className="w-12 h-12 text-primary/60 group-hover:scale-110 transition-transform" />
+                {/* Default poster frame when not hovering */}
+                {(item.id === 'fruit-game' || item.id === 'block-game' || item.id === 'bus-game') && (
+                  <img
+                    className="absolute inset-0 w-full h-full object-cover opacity-100 group-hover:opacity-0 transition-opacity duration-300"
+                    src={
+                      item.id === 'fruit-game'
+                        ? '/FruitGame.png'
+                        : item.id === 'block-game'
+                        ? '/BlockGame.png'
+                        : '/BusGame.png'
+                    }
+                    alt={`${item.title} poster`}
+                  />
+                )}
+                {/* Hover video previews for specific games */}
+                {item.id === 'fruit-game' && (
+                  <video
+                    className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    src="/fruits.mov"
+                    muted
+                    autoPlay
+                    loop
+                    playsInline
+                  />
+                )}
+                {item.id === 'block-game' && (
+                  <video
+                    className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    src="/puzzle.mov"
+                    muted
+                    autoPlay
+                    loop
+                    playsInline
+                  />
+                )}
+                {item.id === 'bus-game' && (
+                  <video
+                    className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    src="/Busgame.mov"
+                    muted
+                    autoPlay
+                    loop
+                    playsInline
+                  />
+                )}
+
+                <Play className="w-12 h-12 text-primary/60 group-hover:scale-110 transition-transform relative z-10" />
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
               <Badge variant="secondary" className="w-fit">{item.category}</Badge>

@@ -85,16 +85,34 @@ export function LandingPage() {
                 onMouseLeave={() => setHoveredGame(null)}
                 onClick={() => handleGameClick(game.path)}
               >
-                <div 
-                  className={`transition-all duration-300 ${
-                    hoveredGame === game.id ? 'transform -translate-y-4 scale-105' : ''
-                  }`}
-                >
+                <div className={`relative transition-all duration-300 ${hoveredGame === game.id ? 'transform -translate-y-4 scale-105' : ''}`}>
+                  {/* Image */}
                   <img 
                     src={game.image} 
                     alt={game.name}
                     className="h-24 w-24 md:h-32 md:w-32 object-contain rounded-lg shadow-lg group-hover:shadow-xl"
                   />
+                  {/* Hover video previews for specific games */}
+                  {game.id === 'fruit-game' && (
+                    <video
+                      className={`absolute inset-0 h-24 w-24 md:h-32 md:w-32 object-cover rounded-lg ${hoveredGame === game.id ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
+                      src="/fruits.mov"
+                      muted
+                      autoPlay
+                      loop
+                      playsInline
+                    />
+                  )}
+                  {game.id === 'block-game' && (
+                    <video
+                      className={`absolute inset-0 h-24 w-24 md:h-32 md:w-32 object-cover rounded-lg ${hoveredGame === game.id ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
+                      src="/puzzle.mov"
+                      muted
+                      autoPlay
+                      loop
+                      playsInline
+                    />
+                  )}
                 </div>
                 <div className="mt-4 text-center">
                   <h3 className="font-semibold text-foreground">{game.name}</h3>

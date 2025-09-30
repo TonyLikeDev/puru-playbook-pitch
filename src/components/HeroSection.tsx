@@ -23,10 +23,8 @@ export function HeroSection({ onBuildGameClick, onPlayDemoClick }: HeroSectionPr
                 Purus Games?
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              <span className="font-semibold text-success">20% faster delivery</span> •{" "}
-              <span className="font-semibold text-primary">95% satisfaction</span> •{" "}
-              <span className="font-semibold text-warning">+40% campaign engagement</span>
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed italic">
+              “We don’t just build games. We craft playful experiences that move people—and move the metrics.”
             </p>
           </div>
           
