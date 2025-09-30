@@ -1,11 +1,65 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "./ui/enhanced-button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Play, TrendingUp, Users, Clock, DollarSign, Gamepad2 } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const portfolioItems = [
+  {
+    id: "block-game",
+    title: "Block Game",
+    client: "Purus Games",
+    description: "Strategic block puzzle game that challenges spatial reasoning and problem-solving skills",
+    impact: "+35% user engagement",
+    metrics: { engagement: "45%", retention: "30%", conversion: "15%" },
+    thumbnail: "/BlockGame.png",
+    category: "Engagement",
+    duration: "4 weeks",
+    cost: "$15,000",
+    genre: "Puzzle"
+  },
+  {
+    id: "fruit-game",
+    title: "Fruit Game",
+    client: "Purus Games",
+    description: "Colorful fruit matching adventure combining strategy with fun gameplay",
+    impact: "+40% session duration",
+    metrics: { engagement: "50%", retention: "35%", conversion: "18%" },
+    thumbnail: "/FruitGame.png",
+    category: "Engagement",
+    duration: "5 weeks",
+    cost: "$18,000",
+    genre: "Match-3"
+  },
+  {
+    id: "bus-game",
+    title: "Bus Game",
+    client: "Purus Games",
+    description: "City bus management simulation for route optimization and passenger satisfaction",
+    impact: "+55% repeat play",
+    metrics: { engagement: "60%", retention: "45%", conversion: "22%" },
+    thumbnail: "/BusGame.png",
+    category: "Retention",
+    duration: "6 weeks",
+    cost: "$22,000",
+    genre: "Simulation"
+  },
+  {
+    id: "sort-game",
+    title: "Sort Game",
+    client: "Purus Games",
+    description: "Mind-bending sorting challenges testing logical thinking and pattern recognition",
+    impact: "+30% completion rate",
+    metrics: { engagement: "42%", retention: "28%", conversion: "12%" },
+    thumbnail: "/SortGame.png",
+    category: "Engagement",
+    duration: "3 weeks",
+    cost: "$12,000",
+    genre: "Puzzle"
+  },
   {
     id: "brand-x",
     title: "EcoChallenge Quest",
@@ -14,7 +68,7 @@ const portfolioItems = [
     impact: "+30% user playtime increase",
     metrics: { engagement: "40%", retention: "25%", conversion: "12%" },
     thumbnail: "/placeholder-game1.jpg",
-    category: "Engagement Campaign",
+    category: "Engagement",
     duration: "6 weeks",
     cost: "$25,000",
     genre: "Puzzle Adventure"
@@ -27,28 +81,25 @@ const portfolioItems = [
     impact: "+45% product page visits",
     metrics: { engagement: "35%", retention: "30%", conversion: "18%" },
     thumbnail: "/placeholder-game2.jpg", 
-    category: "Lead Generation",
+    category: "Leads",
     duration: "8 weeks",
     cost: "$45,000",
     genre: "Exploration RPG"
-  },
-  {
-    id: "brand-z",
-    title: "Skills Mastery Arena", 
-    client: "Brand Z (EdTech)",
-    description: "Competitive learning platform increasing course completion rates",
-    impact: "+60% course completion",
-    metrics: { engagement: "55%", retention: "45%", conversion: "22%" },
-    thumbnail: "/placeholder-game3.jpg",
-    category: "User Retention",
-    duration: "10 weeks",
-    cost: "$60,000",
-    genre: "Strategy Simulation"
   }
 ];
 
 export function PortfolioShowcase() {
+  const navigate = useNavigate();
   const [selectedCase, setSelectedCase] = useState<typeof portfolioItems[0] | null>(null);
+  const [activeTab, setActiveTab] = useState<string>("All");
+  const [expanded, setExpanded] = useState<boolean>(false);
+
+  const categories = useMemo(() => ["All", "Engagement", "Leads", "Retention", "Awareness"], []);
+  const filtered = useMemo(() => {
+    if (activeTab === "All") return portfolioItems;
+    return portfolioItems.filter(i => i.category === activeTab);
+  }, [activeTab]);
+  const itemsToShow = expanded ? filtered : filtered.slice(0, 3);
 
   return (
     <div className="space-y-6">
@@ -59,11 +110,27 @@ export function PortfolioShowcase() {
         </p>
       </div>
 
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:max-w-3xl mx-auto mb-4">
+          {categories.map((cat) => (
+            <TabsTrigger key={cat} value={cat} className="text-xs sm:text-sm">{cat}</TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {portfolioItems.map((item) => (
+        {itemsToShow.map((item) => (
           <Card key={item.id} className="group hover:shadow-lg transition-all duration-300 cursor-pointer border-0 bg-gradient-to-br from-card to-muted/30">
             <CardHeader className="space-y-3">
-              <div className="aspect-video bg-gradient-to-br from-primary/10 to-success/10 rounded-lg flex items-center justify-center relative overflow-hidden">
+              <div 
+                className="aspect-video bg-gradient-to-br from-primary/10 to-success/10 rounded-lg flex items-center justify-center relative overflow-hidden cursor-pointer"
+                onClick={() => {
+                  // Check if it's one of our 4 games and navigate to their page
+                  if (['block-game', 'fruit-game', 'bus-game', 'sort-game'].includes(item.id)) {
+                    navigate(`/${item.id}`);
+                  }
+                }}
+              >
                 <Play className="w-12 h-12 text-primary/60 group-hover:scale-110 transition-transform" />
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
@@ -174,6 +241,14 @@ export function PortfolioShowcase() {
           </Card>
         ))}
       </div>
+
+      {filtered.length > 3 && (
+        <div className="flex justify-center">
+          <Button variant="outline" onClick={() => setExpanded(!expanded)}>
+            {expanded ? "Show Less" : "Show More"}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

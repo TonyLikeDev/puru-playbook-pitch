@@ -2,6 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Brands Marquee Animation */
+@keyframes marquee-rtl {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+.brands-marquee {
+  width: 200%;
+  animation: marquee-rtl 25s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.brands-marquee img {
+  display: block;
+}
+
+/* Games Marquee Animation */
+@keyframes games-marquee-rtl {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+.games-marquee {
+  width: 200%;
+  animation: games-marquee-rtl 30s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.games-marquee img {
+  display: block;
+}
+
 /* Purus Games Marketing Dashboard Design System */
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');

@@ -1,118 +1,101 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { CheckCircle, Clock, Wrench, DollarSign } from "lucide-react";
-
-const competitiveMetrics = [
-  {
-    metric: "Delivery Speed",
-    purusScore: 85,
-    industryScore: 60,
-    icon: Clock,
-    description: "Average project delivery time vs industry standard",
-    purusText: "6-8 weeks",
-    industryText: "12-16 weeks"
-  },
-  {
-    metric: "Customization Options", 
-    purusScore: 90,
-    industryScore: 45,
-    icon: Wrench,
-    description: "Flexibility in game mechanics and brand integration",
-    purusText: "Fully custom",
-    industryText: "Template-based"
-  },
-  {
-    metric: "Post-Launch Support",
-    purusScore: 95,
-    industryScore: 35,
-    icon: CheckCircle, 
-    description: "Ongoing optimization and feature updates",
-    purusText: "6 months included",
-    industryText: "30 days typical"
-  },
-  {
-    metric: "Cost Efficiency",
-    purusScore: 80,
-    industryScore: 55,
-    icon: DollarSign,
-    description: "Value delivered per dollar invested",
-    purusText: "Fixed pricing",
-    industryText: "Variable costs"
-  }
-];
+import { Target, Lightbulb, Palette, Rocket, Handshake, Users } from "lucide-react";
 
 export function CompetitiveEdge() {
   return (
-    <div className="space-y-6">
-      <div className="text-center space-y-2">
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground">Why Choose Purus Games?</h2>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          We outperform industry standards across key metrics that matter to CMOs and marketing teams.
-        </p>
-      </div>
+    <div className="space-y-8">
+      {/* Our Mission */}
+      <Card className="border-0 bg-gradient-to-r from-primary/5 to-success/5 p-8">
+        <div className="text-center space-y-6">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <Target className="w-8 h-8 text-primary" />
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Our Mission</h2>
+          </div>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+            At Purus Games, we believe games are more than just entertainment — they're powerful experiences that connect people, inspire creativity, and deliver real value.
+          </p>
+          <p className="text-base md:text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+            We specialize in game development that blends technical excellence, creative design, and a player-first mindset. From fast-paced mobile games to lightweight HTML5 browser experiences, every project we build is crafted with quality, care, and innovation.
+          </p>
+        </div>
+      </Card>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {competitiveMetrics.map((item) => (
-          <Card key={item.metric} className="border-0 bg-gradient-to-br from-card to-muted/30">
-            <CardHeader className="space-y-3">
+      {/* Core Values */}
+      <div className="space-y-6">
+        <div className="text-center">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <Lightbulb className="w-8 h-8 text-warning" />
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Our Core Values</h2>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card className="border-0 bg-gradient-to-br from-card to-muted/30">
+            <CardHeader className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-primary/10 rounded-lg">
-                  <item.icon className="w-5 h-5 text-primary" />
+                <div className="p-3 bg-primary/10 rounded-lg">
+                  <Palette className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg">{item.metric}</CardTitle>
-                  <CardDescription className="text-sm">{item.description}</CardDescription>
+                  <CardTitle className="text-xl">🎨 Creative Excellence</CardTitle>
                 </div>
               </div>
             </CardHeader>
-            
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-primary">Purus Games</span>
-                  <span className="text-sm font-bold text-primary">{item.purusText}</span>
-                </div>
-                <Progress value={item.purusScore} className="h-2" />
-                
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-muted-foreground">Industry Average</span>
-                  <span className="text-sm text-muted-foreground">{item.industryText}</span>
-                </div>
-                <Progress value={item.industryScore} className="h-2 opacity-50" />
-              </div>
-              
-              <div className="flex justify-center">
-                <div className="bg-success/10 text-success px-3 py-1 rounded-full text-sm font-semibold">
-                  +{item.purusScore - item.industryScore}% advantage
-                </div>
-              </div>
+            <CardContent>
+              <p className="text-muted-foreground leading-relaxed">
+                We design and develop unique, engaging gaming experiences with originality and purpose. Every game we make is more than just play — it's a carefully crafted journey.
+              </p>
             </CardContent>
           </Card>
-        ))}
+
+          <Card className="border-0 bg-gradient-to-br from-card to-muted/30">
+            <CardHeader className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-success/10 rounded-lg">
+                  <Rocket className="w-6 h-6 text-success" />
+                </div>
+                <div>
+                  <CardTitle className="text-xl">🚀 Scalability & Flexibility</CardTitle>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground leading-relaxed">
+                Our team has hands-on expertise in both large-scale Unity game development and lightweight HTML5 game projects. Whether you need a branded advergame, a mobile app, or a cross-platform solution, we adapt to your vision and market.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 bg-gradient-to-br from-card to-muted/30">
+            <CardHeader className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-warning/10 rounded-lg">
+                  <Handshake className="w-6 h-6 text-warning" />
+                </div>
+                <div>
+                  <CardTitle className="text-xl">🤝 Reliable Partnership</CardTitle>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground leading-relaxed">
+                We see every client as a long-term collaborator. With transparent processes and full-cycle development support, we make game creation stress-free and rewarding. Your goals become our mission.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
       </div>
-      
-      <Card className="border-0 bg-gradient-to-r from-primary/5 to-success/5 p-6">
+
+      {/* Our Team */}
+      <Card className="border-0 bg-gradient-to-r from-primary/5 to-success/5 p-8">
         <div className="text-center space-y-4">
-          <h3 className="text-xl font-bold text-foreground">The Purus Advantage</h3>
-          <p className="text-muted-foreground max-w-3xl mx-auto">
-            While others focus on one-size-fits-all solutions, we deliver custom gaming experiences 
-            that align with your specific brand goals and audience needs. Our data-driven approach 
-            ensures measurable ROI from day one.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">20%</div>
-              <div className="text-sm text-muted-foreground">Faster delivery than competitors</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-success">95%</div>
-              <div className="text-sm text-muted-foreground">Client satisfaction rate</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-warning">40%</div>
-              <div className="text-sm text-muted-foreground">Average engagement boost</div>
-            </div>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <Users className="w-8 h-8 text-primary" />
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">👾 Our Team</h2>
           </div>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+            We're a passionate group of game developers, designers, and creators who live and breathe gaming. With diverse backgrounds and a shared love for play, we work together to turn ideas into exceptional games that truly matter.
+          </p>
         </div>
       </Card>
     </div>

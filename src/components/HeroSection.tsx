@@ -2,7 +2,12 @@ import { Button } from "./ui/enhanced-button";
 import { MetricCard } from "./MetricCard";
 import { Play, Rocket, ArrowRight } from "lucide-react";
 
-export function HeroSection() {
+interface HeroSectionProps {
+  onBuildGameClick?: () => void;
+  onPlayDemoClick?: () => void;
+}
+
+export function HeroSection({ onBuildGameClick, onPlayDemoClick }: HeroSectionProps) {
   return (
     <section className="relative py-12 md:py-20 overflow-hidden">
       {/* Background gradients */}
@@ -26,12 +31,34 @@ export function HeroSection() {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="hero" size="xl">
+            <Button
+              variant="hero"
+              size="xl"
+              onClick={() => {
+                if (onPlayDemoClick) {
+                  onPlayDemoClick();
+                  return;
+                }
+                const el = document.getElementById("portfolio");
+                if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
+            >
               <Play className="w-5 h-5" />
               Play a Demo
             </Button>
             
-            <Button variant="cta" size="xl">
+            <Button
+              variant="cta"
+              size="xl"
+              onClick={() => {
+                if (onBuildGameClick) {
+                  onBuildGameClick();
+                  return;
+                }
+                // Fallback: dispatch global event to open contact modal
+                window.dispatchEvent(new CustomEvent("open-contact-modal"));
+              }}
+            >
               <Rocket className="w-5 h-5" />
               Let's Build Your Game Together
             </Button>
@@ -45,25 +72,41 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Trusted By Logos Slider */}
-        <div className="max-w-4xl mx-auto">
-          <p className="text-center text-muted-foreground mb-6">Trusted by leading brands</p>
-          <div className="flex justify-center items-center gap-8 md:gap-12 opacity-60 hover:opacity-80 transition-opacity">
-            <div className="flex items-center gap-2 text-lg font-semibold text-foreground">
-              <div className="w-8 h-8 bg-gradient-to-br from-primary to-success rounded"></div>
-              Brand X
-            </div>
-            <div className="flex items-center gap-2 text-lg font-semibold text-foreground">
-              <div className="w-8 h-8 bg-gradient-to-br from-warning to-primary rounded"></div>
-              TechCorp
-            </div>
-            <div className="flex items-center gap-2 text-lg font-semibold text-foreground">
-              <div className="w-8 h-8 bg-gradient-to-br from-success to-warning rounded"></div>
-              EduLearn
-            </div>
-            <div className="flex items-center gap-2 text-lg font-semibold text-foreground">
-              <div className="w-8 h-8 bg-gradient-to-br from-primary to-warning rounded"></div>
-              GameFlow
+        {/* Trusted By Logos Slider */
+        // Expanded to 10 brands with simple logo placeholders
+        }
+        <div className="max-w-5xl mx-auto">
+          <p className="text-center text-muted-foreground mb-6">Trusted by brands</p>
+          <div className="relative overflow-hidden">
+            <div className="brands-marquee flex items-center gap-10 opacity-70 hover:opacity-100">
+              {(() => {
+                const base = [
+                  { name: "Amazon", src: "/brands/amazon.svg", iconSrc: "/amazon_logo.png" },
+                  { name: "Shopee", src: "/brands/shopee.svg", iconSrc: "/Shopee_logo.png" },
+                  { name: "Brand X", src: "/brands/brandx.svg" },
+                  { name: "TechCorp", src: "/brands/techcorp.svg" },
+                  { name: "EduLearn", src: "/brands/edulearn.svg" },
+                  { name: "GameFlow", src: "/brands/gameflow.svg" },
+                  { name: "NovaLabs", src: "/brands/novalabs.svg" },
+                  { name: "MarketHub", src: "/brands/markethub.svg" },
+                  { name: "Skyline", src: "/brands/skyline.svg" },
+                  { name: "Brightly", src: "/brands/brightly.svg" },
+                ];
+                const doubled = base.concat(base);
+                return doubled.map((b, idx) => (
+                  <div key={`${b.name}-${idx}`} className="shrink-0 flex flex-col items-center">
+                    <img src={b.src} alt={b.name} className="h-8 w-auto opacity-80" />
+                    {b.iconSrc && (
+                      <img
+                        src={b.iconSrc}
+                        alt={`${b.name} icon`}
+                        className="h-4 w-auto mt-1 opacity-70"
+                        onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                      />
+                    )}
+                  </div>
+                ));
+              })()}
             </div>
           </div>
         </div>

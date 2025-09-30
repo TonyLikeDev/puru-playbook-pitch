@@ -39,25 +39,47 @@ export function ROICalculator() {
   const [showDisclaimer, setShowDisclaimer] = useState(false);
 
   useEffect(() => {
-    // Mock ROI calculation formula
-    const cpiEstimate = 0.40;
+    const safeBudget = Math.max(0, Number.isFinite(inputs.budget) ? inputs.budget : 0);
+    const safeAudience = Math.max(0, Number.isFinite(inputs.audienceSize) ? inputs.audienceSize : 0);
+    const safeWeeks = Math.min(16, Math.max(4, Number.isFinite(inputs.campaignLength) ? inputs.campaignLength : 8));
+
+    const baseCpi = 0.40;
+    const lengthEfficiency = 1 + (safeWeeks - 8) * 0.02;
+    const kpiMultiplierMap: Record<string, number> = {
+      engagement: 1.35,
+      leads: 1.20,
+      retention: 1.15,
+      awareness: 1.10
+    };
     const baseEngagementRate = 0.08;
-    const purusBoostMultiplier = 1.35;
-    const avgCustomerValue = 50;
-    
-    const estimatedReach = Math.min(inputs.budget / cpiEstimate, inputs.audienceSize);
-    const engagementBoost = Math.min(
-      baseEngagementRate * purusBoostMultiplier * (inputs.budget / 20000),
-      0.60
+    const kpiMultiplier = kpiMultiplierMap[inputs.kpi] ?? 1.15;
+    const effectiveCpi = baseCpi / lengthEfficiency;
+
+    const estimatedReachRaw = safeBudget / effectiveCpi;
+    const estimatedReach = Math.min(estimatedReachRaw, safeAudience);
+
+    const engagementBoostRate = Math.min(
+      baseEngagementRate * kpiMultiplier * (safeBudget / 20000) * (0.9 + (lengthEfficiency - 1)),
+      0.65
     );
-    const totalEngagements = estimatedReach * engagementBoost;
-    const revenue = totalEngagements * avgCustomerValue * 0.15; // 15% conversion estimate
-    const estimatedROI = ((revenue - inputs.budget) / inputs.budget) * 100;
-    const costPerEngagement = inputs.budget / totalEngagements;
+
+    const totalEngagements = Math.max(1, estimatedReach * engagementBoostRate);
+
+    const avgCustomerValue = 50;
+    const conversionAssumptionMap: Record<string, number> = {
+      engagement: 0.15,
+      leads: 0.22,
+      retention: 0.18,
+      awareness: 0.10
+    };
+    const conv = conversionAssumptionMap[inputs.kpi] ?? 0.15;
+    const revenue = totalEngagements * avgCustomerValue * conv;
+    const estimatedROI = safeBudget > 0 ? ((revenue - safeBudget) / safeBudget) * 100 : 0;
+    const costPerEngagement = safeBudget > 0 ? safeBudget / totalEngagements : 0;
 
     setResults({
       estimatedReach: Math.round(estimatedReach),
-      engagementBoost: Math.round(engagementBoost * 100),
+      engagementBoost: Math.round(engagementBoostRate * 100),
       estimatedROI: Math.round(estimatedROI),
       costPerEngagement: Math.round(costPerEngagement * 100) / 100
     });
@@ -91,7 +113,7 @@ export function ROICalculator() {
                 id="budget"
                 type="number"
                 value={inputs.budget}
-                onChange={(e) => setInputs({...inputs, budget: parseInt(e.target.value) || 0})}
+                onChange={(e) => setInputs({...inputs, budget: Number(e.target.value) || 0})}
                 placeholder="Enter budget in USD"
               />
               <div className="text-xs text-muted-foreground">
@@ -105,7 +127,7 @@ export function ROICalculator() {
                 id="audience"
                 type="number"
                 value={inputs.audienceSize}
-                onChange={(e) => setInputs({...inputs, audienceSize: parseInt(e.target.value) || 0})}
+                onChange={(e) => setInputs({...inputs, audienceSize: Number(e.target.value) || 0})}
                 placeholder="Number of potential users"
               />
               <div className="text-xs text-muted-foreground">
@@ -222,8 +244,8 @@ export function ROICalculator() {
               <DollarSign className="w-4 h-4" />
               Request Custom ROI Model
             </Button>
-            <Button variant="outline" size="lg">
-              Schedule Strategy Call
+            <Button variant="outline" size="lg" onClick={() => window.dispatchEvent(new CustomEvent("open-contact-modal"))}>
+              Schedule Strategy Call (20‑min)
             </Button>
           </div>
         </div>
